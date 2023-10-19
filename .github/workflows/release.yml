@@ -14,5 +14,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Release
-        uses: softprops/action-gh-release@v1
+      - name: Install gh CLI
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Create Release
+        run: |
+          gh release create ${{ github.ref }} \
+            --title "Release ${{ github.ref }}" \
+            --notes "Release ${{ github.ref }}" \
+            --draft false \
+            --prerelease false
